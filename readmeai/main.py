@@ -54,13 +54,7 @@ async def readme_generator(config: ConfigLoader, output_file: str) -> None:
 
         # TODO: implement batch request to get response using LLM
         llm = OpenAIHandler(config, context)
-        responses = await llm.batch_request()
-        responses = [
-            "file_summaries",
-            "features",
-            "overview",
-            "slogan",
-        ]
+        responses = await llm.batch_request()        
         (
             file_summaries,
             features,

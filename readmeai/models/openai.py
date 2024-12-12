@@ -63,7 +63,8 @@ class OpenAIHandler(BaseModelHandler):
                 {"role": "user", "content": prompt},
             ]
 
-            response = self.model.invoke(messages)
+            data = self.model.invoke(messages)
+            response = data.content
             self._logger.info(f"Response from OpenAI for '{index}': {response}")
             return index, response
 

@@ -17,7 +17,7 @@ from readmeai.ingestion.models import RepositoryContext
 from readmeai.ingestion.pipeline import RepositoryProcessor
 from readmeai.logger import get_logger
 from readmeai.models.dalle import DalleHandler
-from readmeai.models.factory import ModelFactory
+from readmeai.models.openai import OpenAIHandler
 from readmeai.postprocessor import response_cleaner
 from readmeai.readers.git.repository import load_data
 from readmeai.utils.file_handler import FileHandler
@@ -52,7 +52,7 @@ async def readme_generator(config: ConfigLoader, output_file: str) -> None:
 
         log_repository_context(context)
 
-        async with ModelFactory.get_backend(config, context).use_api() as llm:
+        async with OpenAIHandler(config, context).use_api() as llm:
             responses = await llm.batch_request()
             (
                 file_summaries,
@@ -60,6 +60,8 @@ async def readme_generator(config: ConfigLoader, output_file: str) -> None:
                 overview,
                 slogan,
             ) = responses
+            print(responses)
+            
             config.config.md.features = config.config.md.features.format(
                 response_cleaner.format_markdown_table(features),
             )

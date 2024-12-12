@@ -52,23 +52,31 @@ async def readme_generator(config: ConfigLoader, output_file: str) -> None:
 
         log_repository_context(context)
 
-        async with OpenAIHandler(config, context).use_api() as llm:
-            responses = await llm.batch_request()
-            (
-                file_summaries,
-                features,
-                overview,
-                slogan,
-            ) = responses
-            print(responses)
-            
-            config.config.md.features = config.config.md.features.format(
-                response_cleaner.format_markdown_table(features),
-            )
-            config.config.md.overview = config.config.md.overview.format(
-                response_cleaner.process_markdown(overview),
-            )
-            config.config.md.slogan = response_cleaner.remove_quotes(slogan)
+        # TODO: implement batch request to get response using LLM
+        llm = OpenAIHandler(config, context)
+        responses = await llm.batch_request()
+        responses = [
+            "file_summaries",
+            "features",
+            "overview",
+            "slogan",
+        ]
+        (
+            file_summaries,
+            features,
+            overview,
+            slogan,
+        ) = responses
+
+        print(responses)
+
+        config.config.md.features = config.config.md.features.format(
+            response_cleaner.format_markdown_table(features),
+        )
+        config.config.md.overview = config.config.md.overview.format(
+            response_cleaner.process_markdown(overview),
+        )
+        config.config.md.slogan = response_cleaner.remove_quotes(slogan)
 
         if should_generate_image(config):
             await generate_image(config)

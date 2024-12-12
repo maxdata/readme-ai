@@ -87,14 +87,7 @@ class BaseModelHandler(ABC):
 
     async def batch_request(self) -> list[tuple[str, str]]:
         """Generates a batch of prompts and processes the responses."""
-        if self.config.llm.api == LLMService.OFFLINE.name:
-            return await self._make_request(
-                index=None,
-                prompt=None,
-                tokens=None,
-                repo_files=self.documents,
-            )
-
+        
         summaries_prompts = await set_summary_context(
             self.config,
             self.documents,
@@ -177,8 +170,7 @@ class BaseModelHandler(ABC):
             _, summary_or_error = await self._make_request(
                 file_path,
                 prompt,
-                tokens,
-                None,
+                tokens
             )
             file_summaries.append((file_path, summary_or_error))
 

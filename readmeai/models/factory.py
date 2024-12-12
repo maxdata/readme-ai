@@ -17,9 +17,6 @@ class ModelFactory:
     """
 
     _model_map: ClassVar[dict] = {
-        LLMService.ANTHROPIC: AnthropicHandler,
-        LLMService.GEMINI.value: GeminiHandler,
-        LLMService.OLLAMA.value: OpenAIHandler,
         LLMService.OPENAI.value: OpenAIHandler,
         LLMService.OFFLINE.value: OfflineHandler,
     }

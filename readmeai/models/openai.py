@@ -40,15 +40,7 @@ class OpenAIHandler(BaseModelHandler):
 
         if self.config.llm.api == LLMService.OPENAI.name:
             self.url = f"{self.host_name}{self.path}"
-            self.client = openai.OpenAI(api_key=os.getenv("OPENAI_API_KEY"))
-
-        elif self.config.llm.api == LLMService.OLLAMA.name:
-            self.url = f"{self.localhost}{self.path}"
-            self.client = openai.OpenAI(
-                base_url=f"{self.localhost}v1",
-                api_key=LLMService.OLLAMA.name,
-            )
-
+            self.client = openai.OpenAI(api_key=os.getenv("AZURE_OPENAI_API_KEY"))
         self.headers = {"Authorization": f"Bearer {self.client.api_key}"}
 
     async def _build_payload(self, prompt: str, tokens: int) -> dict:

@@ -36,8 +36,8 @@ def error_handler() -> Generator[None, None, None]:
 
 def readme_agent(config: ConfigLoader, output_file: str) -> None:
     """Wrap asyncronous README generation process with context manager."""
-    with error_handler():
-        asyncio.run(readme_generator(config, output_file))
+    # with error_handler():
+    asyncio.run(readme_generator(config, output_file))
 
 
 async def readme_generator(config: ConfigLoader, output_file: str) -> None:

@@ -50,6 +50,9 @@ async def readme_generator(config: ConfigLoader, output_file: str) -> None:
             repo_path=repo_path
         )
 
+        # only take first two files. Debugging
+        context.files = context.files[:2]
+
         log_repository_context(context)
 
         # TODO: implement batch request to get response using LLM

@@ -79,8 +79,7 @@ class BaseModelHandler(ABC):
         self,
         index: str | None,
         prompt: str | None,
-        tokens: int | None,
-        repo_files: list[tuple[str, str]] | None,
+        tokens: int | None
     ) -> Any:
         """Handles LLM API response and returns the generated text."""
         ...
@@ -148,8 +147,7 @@ class BaseModelHandler(ABC):
             _, summary = await self._make_request(
                 prompt["type"],
                 formatted_prompt,
-                tokens,
-                None,
+                tokens
             )
             return summary
 
